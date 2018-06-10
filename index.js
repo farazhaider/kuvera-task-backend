@@ -2,6 +2,7 @@ const express = require('express')
 var cors = require('cors')
 var bodyParser = require('body-parser')
 const app = express()
+var serveStatic = require('serve-static');
 
 var logErrors = function (err, req, res, next) {
     console.error(err.stack)
@@ -21,7 +22,7 @@ var errorHandler = function (err, req, res, next) {
     res.render('error', { error: err })
 };
 
-
+app.use(serveStatic(__dirname + "/dist"));
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -83,4 +84,5 @@ app.post('/computeReturn', function (req, res, next) {
         });
 });
 
-app.listen(3000, () => console.log('Listening on port 3000!'))
+
+app.listen(5000),() => console.log('Listening on port 5000');
