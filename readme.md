@@ -15,6 +15,11 @@ Make sure you have Python 3.x installed and then run
  
  This will cleanup the data from the above links and make a structured csv file.
 
+
+Run this step to install the dependencies.
+
+    npm install
+
 Now to populate our database instance, run the following
 
     node populate_db.js
