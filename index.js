@@ -33,15 +33,11 @@ app.use(errorHandler);
 var Datastore = require('nedb');
 var db = new Datastore({ filename: 'mf.db', autoload: true });
 
-// Catch all routes and redirect to the index file
-app.get('*', function (req, res) {
-    res.sendFile(__dirname + '/dist/index.html')
-})
+
 
 app.get('/mutualFundHouses', function (req, res) {
     res.send(['Axis Mutual Fund', 'HSBC Mutual Fund']);
 });
-
 
 app.get('/mutualFunds', function (req, res, next) {
     db.find({ mutual_fund_house: req.query.selectedFundHouse }, { mutual_fund_name: 1, _id: 0 }, function (err, docs) {
