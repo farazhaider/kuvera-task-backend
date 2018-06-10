@@ -60,12 +60,18 @@ app.post('/computeReturn', function (req, res, next) {
             if (err) {
                 next(err); // Pass errors to Express.
             }
+            else if(doc.length<1){
+                next(new Error('Insufficient Data'));
+            }
             else {
                 let sharesPurchased = req.body.amount / doc[0].net_asset_value;
                 db.find({ mutual_fund_name: req.body.selectedFund, date: { $gte: new Date(req.body.date) } }, { net_asset_value: 1, _id: 0 }).sort({ date: -1 }).limit(1).exec(
                     function (err, docx) {
                         if (err) {
                             next(err); // Pass errors to Express.
+                        }
+                        else if(docx.length<1){
+                            next(new Error('Insufficient Data'));
                         }
                         else {
                             let returnAmount = Math.round(docx[0].net_asset_value * sharesPurchased);
